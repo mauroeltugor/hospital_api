@@ -1,29 +1,36 @@
-# Directorios generados
+# === Directorios generados ===
 target/
 out/
+build/
 
-# Archivos de configuración de IDE
+# === Archivos de configuración de IDEs ===
 .vscode/
 .idea/
+*.iml
 
-# Archivos de Maven
+# === Archivos de Maven ===
 .mvn/
 .mvn/wrapper/
 
-# Archivos temporales o de configuración del sistema
+# === Archivos generados por Maven ===
+pom.xml.*
+
+# === Archivos compilados de Java ===
+*.class
+
+# === Archivos temporales o del sistema ===
 *.log
 *.tmp
 *.swp
 *.bak
 
-# Archivos de entorno
+# === Archivos de entorno ===
 .env
 
-# Archivos específicos de Docker
+# === Archivos específicos de Docker ===
 .dockerignore
+Dockerfile
 
-# Archivos compilados de Java
-*.class
-
-# Archivos generados por Maven
-pom.xml.*
+# === Archivos del sistema operativo ===
+.DS_Store
+Thumbs.db
