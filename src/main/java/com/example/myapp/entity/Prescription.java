@@ -1,4 +1,4 @@
-﻿package com.example.myapp.entity;
+package com.example.myapp.entity;
 
 
 import jakarta.persistence.*;
@@ -25,4 +25,5 @@ public class Prescription {
     
     @Column(name = "issued_at")
     private LocalDateTime issuedAt;
+
 }
