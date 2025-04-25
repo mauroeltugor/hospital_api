@@ -30,7 +30,23 @@ pom.xml.*
 # === Archivos específicos de Docker ===
 .dockerignore
 Dockerfile
+docker-compose.yml
 
-# === Archivos del sistema operativo ===
-.DS_Store
+# === Archivos de PowerShell ===
+*.ps1
+
+# === Archivos de configuración específicos de Windows ===
 Thumbs.db
+
+# === Archivos específicos de Unix ===
+.DS_Store
+
+# === Archivos generados por herramientas de construcción ===
+*.jar
+*.war
+*.ear
+*.tar.gz
+*.zip
+
+# === Archivos de configuración de Git ===
+.gitattributes
