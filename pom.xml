@@ -100,7 +100,7 @@
         <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-annotations</artifactId>
-            <version>${spotbugs.version}</version>
+            <version>4.9.3</version>
         </dependency>
 
         <!-- Testing -->
@@ -115,8 +115,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!-- Mockito explÃ­cito -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -154,15 +152,15 @@
                 </configuration>
             </plugin>
 
+            <!-- Pruebas -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>${maven.surefire.plugin.version}</version>
                 <configuration>
                     <useSystemClassLoader>false</useSystemClassLoader>
                 </configuration>
             </plugin>
-
 
             <!-- Plugin Spring Boot -->
             <plugin>
@@ -174,7 +172,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>${spotbugs.version}.0</version>
+                <version>${spotbugs.version}</version>
                 <executions>
                     <execution>
                         <phase>verify</phase>
