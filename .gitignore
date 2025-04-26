@@ -24,6 +24,8 @@ pom.xml.*
 *.swp
 *.bak
 
+#Innecessary files
+HELP.md
 
 # === Archivos específicos de Docker ===
 .dockerignore
