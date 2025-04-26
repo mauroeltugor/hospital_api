@@ -1,31 +1,50 @@
 package com.example.myapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import java.util.Date;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "sessions")
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Session {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    
-    @Column(name = "session_date")
-    @Temporal(TemporalType.DATE)
-    private Date sessionDate;
-    
-    @Column(name = "effectiveness")
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "treatment_id", nullable = false)
+    @JsonBackReference("treatment-session")
+    private Treatment treatment;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id", nullable = false)
+    @JsonBackReference("patient-session")
+    private Patient patient;
+
+    @Column(name = "session_date", nullable = false)
+    private LocalDate sessionDate;
+
     private Integer effectiveness;
-    
-    @Column(name = "observations", columnDefinition = "TEXT")
+
+    @Column(columnDefinition = "TEXT")
     private String observations;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 }

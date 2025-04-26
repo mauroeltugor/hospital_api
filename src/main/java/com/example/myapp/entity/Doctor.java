@@ -1,36 +1,45 @@
 package com.example.myapp.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "doctors")
-@Data
-@EqualsAndHashCode(callSuper = true)
-@SuperBuilder
+@PrimaryKeyJoinColumn(name = "user_id")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 public class Doctor extends User {
-    
-    @Column(name = "license_number", unique = true)
+
+    @Column(name = "license_number", unique = true, nullable = false)
     private String licenseNumber;
-    
+
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private Set<DoctorSpecialty> doctorSpecialties = new HashSet<>();
-    
+    @JsonManagedReference("doctor-schedule")
+    @Builder.Default
+    private Set<DoctorSchedule> schedules = new HashSet<>();
+
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private Set<DoctorSchedule> doctorSchedules = new HashSet<>();
-    
+    @JsonManagedReference("doctor-medical-record-item")
+    @Builder.Default
+    private Set<MedicalRecordItem> medicalRecordItems = new HashSet<>();
+
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private Set<Appointment> appointments = new HashSet<>();
+    @JsonManagedReference("doctor-prescription")
+    @Builder.Default
+    private Set<Prescription> prescriptions = new HashSet<>();
+
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    @JsonManagedReference("doctor-specialty")
+    @Builder.Default
+    private Set<DoctorSpecialty> specialties = new HashSet<>();
+
 }

@@ -1,34 +1,40 @@
 package com.example.myapp.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "allergies")
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Allergy {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    
-    @Column(name = "name", unique = true)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
     private String name;
-    
-    @Column(name = "notes", columnDefinition = "TEXT")
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Severity severity;
+
+    @Column(columnDefinition = "TEXT")
     private String notes;
-    
+
     @OneToMany(mappedBy = "allergy", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private Set<PatientAllergy> patientAllergies = new HashSet<>();
+    @JsonManagedReference("allergy-patient")
+    @Builder.Default
+    private Set<PatientAllergy> patients = new HashSet<>();
+
+    public enum Severity {
+        MILD, MODERATE, SEVERE, LIFE_THREATENING
+    }
 }

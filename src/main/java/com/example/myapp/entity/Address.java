@@ -1,39 +1,49 @@
 package com.example.myapp.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "addresses")
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Address {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    
-    @Column(name = "street_line1")
+    private Long id;
+
+    @Column(name = "street_line1", nullable = false)
     private String streetLine1;
-    
+
     @Column(name = "street_line2")
     private String streetLine2;
-    
+
     @Column(name = "postal_code")
     private String postalCode;
-    
-    @ManyToOne
-    @JoinColumn(name = "city_id")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id", nullable = false)
     private City city;
-    
-    @OneToOne(mappedBy = "address")
-    @JsonBackReference
-    private User user;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "address")
+    @Builder.Default
+    private Set<User> users = new HashSet<>();
 }

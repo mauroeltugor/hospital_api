@@ -5,25 +5,25 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "patients_allergies")
+@Table(name = "prescription_treatments")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PatientAllergy {
+public class PrescriptionTreatment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medical_patient_id", nullable = false)
-    @JsonBackReference("patient-allergies")
-    private Patient patient;
+    @JoinColumn(name = "prescription_id", nullable = false)
+    @JsonBackReference("prescription-treatment")
+    private Prescription prescription;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "allergy_id", nullable = false)
-    @JsonBackReference("allergy-patient")
-    private Allergy allergy;
+    @JoinColumn(name = "treatment_id", nullable = false)
+    @JsonBackReference("treatment-prescription")
+    private Treatment treatment;
 }

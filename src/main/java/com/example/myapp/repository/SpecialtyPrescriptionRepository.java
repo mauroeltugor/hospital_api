@@ -1,11 +1,9 @@
 package com.example.myapp.repository;
 
-import com.example.myapp.entity.Allergy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import com.example.myapp.entity.SpecialtyPrescription;
 
 @Repository
-public interface AllergyRepository extends JpaRepository<Allergy, Integer> {
+public interface SpecialtyPrescriptionRepository extends JpaRepository<SpecialtyPrescription, Long> {
 }

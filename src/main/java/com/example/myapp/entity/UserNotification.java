@@ -1,42 +1,43 @@
 package com.example.myapp.entity;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "user_notifications")
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserNotification {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    @JsonBackReference
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference("user-notifications")
     private User user;
-    
-    @ManyToOne
-    @JoinColumn(name = "notification_id")
-    @JsonBackReference
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "notification_id", nullable = false)
+    @JsonBackReference("notification-user")
     private Notification notification;
-    
-    @Column(name = "is_read")
+
+    @Column(name = "is_read", nullable = false)
     private Boolean isRead;
-    
+
     @Column(name = "read_at")
     private LocalDateTime readAt;
-    
+
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean isDeleted;
+
     @Column(name = "delivered_at")
     private LocalDateTime deliveredAt;
 }
