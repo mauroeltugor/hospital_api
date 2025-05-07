@@ -30,7 +30,6 @@ HELP.md
 # === Archivos específicos de Docker ===
 .dockerignore
 Dockerfile
-docker-compose.yml
 
 # === Archivos de PowerShell ===
 *.ps1
@@ -58,5 +57,3 @@ entrypoint.sh
 mvnw
 mvnw.cmd
 
-# === Archivos de entorno ===
-.env
