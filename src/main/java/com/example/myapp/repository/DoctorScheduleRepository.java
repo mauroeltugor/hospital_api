@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface DoctorScheduleRepository extends JpaRepository<DoctorSchedule, Integer> {
+public interface DoctorScheduleRepository extends JpaRepository<DoctorSchedule, Long> {
 }

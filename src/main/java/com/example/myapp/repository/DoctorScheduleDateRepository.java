@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DoctorScheduleDateRepository extends JpaRepository<DoctorScheduleDate, Integer> {
+public interface DoctorScheduleDateRepository extends JpaRepository<DoctorScheduleDate, Long> {
 }
