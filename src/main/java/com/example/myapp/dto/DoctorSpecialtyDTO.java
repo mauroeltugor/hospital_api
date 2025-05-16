@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -24,4 +25,8 @@ public class DoctorSpecialtyDTO {
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    private Long userId;
+    private String licenseNumber;
+    private Set<Long> specialtyIds;
 }

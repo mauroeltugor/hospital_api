@@ -42,4 +42,5 @@ public class Doctor extends User {
     @Builder.Default
     private Set<DoctorSpecialty> specialties = new HashSet<>();
 
+    private Long userId;
 }
