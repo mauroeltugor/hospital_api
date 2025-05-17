@@ -39,4 +39,16 @@ public class AppointmentService {
     public List<Appointment> getAppointmentStatistics(LocalDate startDate, LocalDate endDate) {
         return appointmentRepository.getAppointmentStatistics(startDate, endDate);
     }
+
+    public Optional<Appointment> getAppointmentById(int i) {
+      return appointmentRepository.findById(i);
+    }
+
+    public Appointment createAppointment(Appointment appt1) {
+        return appointmentRepository.save(appt1);
+    }
+
+    public void deleteAppointment(int i) {
+        appointmentRepository.deleteById(i);
+    }
 }

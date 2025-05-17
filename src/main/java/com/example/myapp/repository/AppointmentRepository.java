@@ -1,6 +1,7 @@
 package com.example.myapp.repository;
 
 import com.example.myapp.entity.Appointment;
+import com.example.myapp.entity.DoctorSchedule;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,5 +19,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 
     @Query("SELECT new com.hospital.api.AppointmentStatistics(a.status, COUNT(a)) FROM Appointment a WHERE a.createdAt BETWEEN :startDate AND :endDate GROUP BY a.status")
     List<Appointment> getAppointmentStatistics(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    
+    List<Appointment> findById(Long id);
 
 }
