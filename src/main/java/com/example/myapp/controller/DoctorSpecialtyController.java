@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/doctor-specialties")
+@RequestMapping("/doctor-specialties")
 @RequiredArgsConstructor
 public class DoctorSpecialtyController {
 
@@ -41,4 +41,5 @@ public class DoctorSpecialtyController {
         return ResponseEntity.noContent().build();
     }
 }
+
 

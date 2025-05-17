@@ -19,17 +19,17 @@ public class DoctorScheduleDateController {
 
     @PostMapping
     public ResponseEntity<DoctorScheduleDate> createDoctorScheduleDate(@RequestBody DoctorScheduleDate doctorScheduleDate) {
-        return new ResponseEntity<>(doctorScheduleDateService.createDoctorScheduleDate(doctorScheduleDate), HttpStatus.CREATED);
+        return new ResponseEntity<>(doctorScheduleDateService.create(doctorScheduleDate), HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<DoctorScheduleDate>> getAllDoctorScheduleDates() {
-        return new ResponseEntity<>(doctorScheduleDateService.getAllDoctorScheduleDates(), HttpStatus.OK);
+        return new ResponseEntity<>(doctorScheduleDateService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DoctorScheduleDate> getDoctorScheduleDateById(@PathVariable Long id) {
-        Optional<DoctorScheduleDate> scheduleDate = doctorScheduleDateService.getDoctorScheduleDateById(id);
+        Optional<DoctorScheduleDate> scheduleDate = Optional.of(doctorScheduleDateService.findById(id));
         return scheduleDate.map(s -> new ResponseEntity<>(s, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -37,7 +37,7 @@ public class DoctorScheduleDateController {
     @PutMapping("/{id}")
     public ResponseEntity<DoctorScheduleDate> updateDoctorScheduleDate(@PathVariable Long id, @RequestBody DoctorScheduleDate doctorScheduleDate) {
         try {
-            return new ResponseEntity<>(doctorScheduleDateService.updateDoctorScheduleDate(id, doctorScheduleDate), HttpStatus.OK);
+            return new ResponseEntity<>(doctorScheduleDateService.update(id, doctorScheduleDate), HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -45,7 +45,7 @@ public class DoctorScheduleDateController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDoctorScheduleDate(@PathVariable Long id) {
-        doctorScheduleDateService.deleteDoctorScheduleDate(id);
+        doctorScheduleDateService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

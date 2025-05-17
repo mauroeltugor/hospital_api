@@ -17,10 +17,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+
 import java.util.Set;
 
 @Service
+
 public class DoctorService {
 
     private final DoctorRepository doctorRepository;
@@ -35,8 +36,9 @@ public class DoctorService {
         return doctorRepository.findAll();
     }
 
-    public Optional<Doctor> getById(Long id) {
-        return doctorRepository.findById(id);
+    public Doctor getById(Long id) {
+        return doctorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Doctor no encontrado con id: " + id));
     }
 
     public Doctor create(Doctor doctor) {
@@ -46,29 +48,32 @@ public class DoctorService {
         return doctorRepository.save(doctor);
     }
 
-public Doctor updateDoctor(Long id, Doctor doctor) {
-    return doctorRepository.findById(id).map(d -> {
-        // Campos propios de Doctor
-        d.setLicenseNumber(doctor.getLicenseNumber());
-        d.setSchedules(doctor.getSchedules());
-        d.setMedicalRecordItems(doctor.getMedicalRecordItems());
-        d.setPrescriptions(doctor.getPrescriptions());
-        d.setSpecialties(doctor.getSpecialties());
+    public Doctor updateDoctor(Long id, Doctor doctor) {
+        Doctor existing = doctorRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Doctor no encontrado con id: " + id));
 
-        // ✅ Campos heredados de User
-        d.setFirstName(doctor.getFirstName());
-        d.setLastName(doctor.getLastName());
-        d.setCc(doctor.getCc());
-        d.setUsername(doctor.getUsername());
-        d.setPhone(doctor.getPhone());
-        d.setPasswordHash(doctor.getPasswordHash());
+        // Campos específicos de Doctor
+        existing.setLicenseNumber(doctor.getLicenseNumber());
+        existing.setSchedules(doctor.getSchedules());
+        existing.setMedicalRecordItems(doctor.getMedicalRecordItems());
+        existing.setPrescriptions(doctor.getPrescriptions());
+        existing.setSpecialties(doctor.getSpecialties());
 
-        return doctorRepository.save(d);
-    }).orElseThrow(() -> new RuntimeException("Doctor no encontrado"));
-}
+        // Campos heredados de User
+        existing.setFirstName(doctor.getFirstName());
+        existing.setLastName(doctor.getLastName());
+        existing.setCc(doctor.getCc());
+        existing.setUsername(doctor.getUsername());
+        existing.setPhone(doctor.getPhone());
+        existing.setPasswordHash(doctor.getPasswordHash());
 
+        return doctorRepository.save(existing);
+    }
 
-    public void eliminar(Long id) {
+    public void delete(Long id) {
+        if (!doctorRepository.existsById(id)) {
+            throw new EntityNotFoundException("Doctor no encontrado con id: " + id);
+        }
         doctorRepository.deleteById(id);
     }
 
@@ -156,4 +161,5 @@ public Doctor updateDoctor(Long id, Doctor doctor) {
     }
 
 }
+
 

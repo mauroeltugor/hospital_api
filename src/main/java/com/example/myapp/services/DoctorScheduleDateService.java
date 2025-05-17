@@ -2,41 +2,47 @@ package com.example.myapp.services;
 
 import com.example.myapp.entity.DoctorScheduleDate;
 import com.example.myapp.repository.DoctorScheduleDateRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class DoctorScheduleDateService {
 
-    @Autowired
-    private DoctorScheduleDateRepository doctorScheduleDateRepository;
+    private final DoctorScheduleDateRepository repository;
 
-    public DoctorScheduleDate createDoctorScheduleDate(DoctorScheduleDate doctorScheduleDate) {
-        return doctorScheduleDateRepository.save(doctorScheduleDate);
+    public DoctorScheduleDate create(DoctorScheduleDate doctorScheduleDate) {
+        return repository.save(doctorScheduleDate);
     }
 
-    public List<DoctorScheduleDate> getAllDoctorScheduleDates() {
-        return doctorScheduleDateRepository.findAll();
+    public List<DoctorScheduleDate> findAll() {
+        return repository.findAll();
     }
 
-    public Optional<DoctorScheduleDate> getDoctorScheduleDateById(Long id) {
-        return doctorScheduleDateRepository.findById(id);
+    public DoctorScheduleDate findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("DoctorScheduleDate no encontrada con id: " + id));
     }
 
-    public DoctorScheduleDate updateDoctorScheduleDate(Long id, DoctorScheduleDate doctorScheduleDate) {
-        return doctorScheduleDateRepository.findById(id).map(existingScheduleDate -> {
-            existingScheduleDate.setDate(doctorScheduleDate.getDate());
-            existingScheduleDate.setStatus(doctorScheduleDate.getStatus());
-            existingScheduleDate.setNotes(doctorScheduleDate.getNotes());
-            return doctorScheduleDateRepository.save(existingScheduleDate);
-        }).orElseThrow(() -> new RuntimeException("DoctorScheduleDate not found"));
+    public DoctorScheduleDate update(Long id, DoctorScheduleDate updated) {
+        DoctorScheduleDate existing = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("DoctorScheduleDate no encontrada con id: " + id));
+
+        existing.setDate(updated.getDate());
+        existing.setStatus(updated.getStatus());
+        existing.setNotes(updated.getNotes());
+
+        return repository.save(existing);
     }
 
-    public void deleteDoctorScheduleDate(Long id) {
-        doctorScheduleDateRepository.deleteById(id);
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new RuntimeException("DoctorScheduleDate no encontrada con id: " + id);
+        }
+        repository.deleteById(id);
     }
 }
+
 

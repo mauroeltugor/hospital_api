@@ -32,8 +32,8 @@ public class DoctorController {
 
     @GetMapping("/{id}")
     public Doctor getById(@PathVariable Long id) {
-        return doctorService.getById(id)
-                .orElseThrow(() -> new RuntimeException("Doctor no encontrado"));
+        return doctorService.getById(id);
+                
     }
 
     @PostMapping
@@ -47,8 +47,8 @@ public class DoctorController {
     }
 
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
-        doctorService.eliminar(id);
+    public void delete(@PathVariable Long id) {
+        doctorService.delete(id);
     }
 
     @PostMapping("/register")

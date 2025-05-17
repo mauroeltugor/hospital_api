@@ -11,34 +11,39 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DoctorSpecialtyService {
 
-    private final DoctorSpecialtyRepository doctorSpecialtyRepository;
+    private final DoctorSpecialtyRepository repository;
 
     public DoctorSpecialty create(DoctorSpecialty doctorSpecialty) {
-        return doctorSpecialtyRepository.save(doctorSpecialty);
+        return repository.save(doctorSpecialty);
     }
 
     public List<DoctorSpecialty> findAll() {
-        return doctorSpecialtyRepository.findAll();
+        return repository.findAll();
     }
 
-    public DoctorSpecialty findById(Long id) {
-        return doctorSpecialtyRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("DoctorSpecialty no encontrada con id: " + id));
-    }
+public DoctorSpecialty findById(Long id) {
+    return repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("DoctorSpecialty no encontrada con id: " + id));
+}
 
-    public DoctorSpecialty update(Long id, DoctorSpecialty updated) {
-        return doctorSpecialtyRepository.findById(id)
-                .map(existing -> {
-                    existing.setDoctor(updated.getDoctor());
-                    existing.setSpecialty(updated.getSpecialty());
-                    existing.setCertificationDate(updated.getCertificationDate());
-                    existing.setExperienceLevel(updated.getExperienceLevel());
-                    return doctorSpecialtyRepository.save(existing);
-                }).orElseThrow(() -> new RuntimeException("DoctorSpecialty no encontrada con id: " + id));
-    }
+public DoctorSpecialty update(Long id, DoctorSpecialty updated) {
+    DoctorSpecialty existing = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("DoctorSpecialty no encontrada con id: " + id));
+
+    // Actualizar los campos que quieres modificar
+    existing.setCertificationDate(updated.getCertificationDate());
+    existing.setExperienceLevel(updated.getExperienceLevel());
+    // Si hay más campos que actualizar, agrégalos aquí.
+
+    return repository.save(existing);
+}
+
 
     public void delete(Long id) {
-        doctorSpecialtyRepository.deleteById(id);
+    DoctorSpecialty existing = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("DoctorSpecialty no encontrada con id: " + id));
+        repository.delete(existing);
     }
 }
+
 

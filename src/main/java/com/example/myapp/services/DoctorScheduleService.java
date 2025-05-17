@@ -20,6 +20,7 @@ public class DoctorScheduleService {
     private final DoctorRepository doctorRepository;
 
     public DoctorSchedule createSchedule(Long doctorId, DoctorSchedule schedule) {
+        // Obtener doctor usando repo, necesario para relación
         Doctor doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(() -> new EntityNotFoundException("Doctor no encontrado con ID: " + doctorId));
         schedule.setDoctor(doctor);
@@ -27,28 +28,29 @@ public class DoctorScheduleService {
     }
 
     public DoctorSchedule updateSchedule(Long id, DoctorSchedule updated) {
-        return scheduleRepository.findById(id).map(schedule -> {
-            schedule.setStartTime(updated.getStartTime());
-            schedule.setEndTime(updated.getEndTime());
-            schedule.setBreakStart(updated.getBreakStart());
-            schedule.setBreakEnd(updated.getBreakEnd());
-            schedule.setMaxAppointments(updated.getMaxAppointments());
-            schedule.setWorkDay(updated.getWorkDay());
-            
-            return scheduleRepository.save(schedule);
-        }).orElseThrow(() -> new EntityNotFoundException("Horario no encontrado"));
+        // Buscar horario, modificar campos y guardar
+        DoctorSchedule existing = scheduleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Horario no encontrado con id: " + id));
+        existing.setStartTime(updated.getStartTime());
+        existing.setEndTime(updated.getEndTime());
+        existing.setBreakStart(updated.getBreakStart());
+        existing.setBreakEnd(updated.getBreakEnd());
+        existing.setMaxAppointments(updated.getMaxAppointments());
+        existing.setWorkDay(updated.getWorkDay());
+
+        return scheduleRepository.save(existing);
     }
 
     public void deleteSchedule(Long id) {
         if (!scheduleRepository.existsById(id)) {
-            throw new EntityNotFoundException("Horario no encontrado");
+            throw new EntityNotFoundException("Horario no encontrado con id: " + id);
         }
         scheduleRepository.deleteById(id);
     }
 
     public DoctorSchedule getSchedule(Long id) {
         return scheduleRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Horario no encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Horario no encontrado con id: " + id));
     }
 
     public List<DoctorSchedule> getAllSchedules() {

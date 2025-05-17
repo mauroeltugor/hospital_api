@@ -50,4 +50,9 @@ public class DoctorSpecialty {
     public enum ExperienceLevel {
         INTERN, JUNIOR, MID, SENIOR, CONSULTANT
     }
+
+    public DoctorSpecialty orElseThrow(Object object) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
+    }
 }

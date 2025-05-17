@@ -9,36 +9,37 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/specialties")
+@RequestMapping("/specialties")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*") // Útil para Postman o frontends
 public class SpecialtyController {
 
-    private final SpecialtyService specialtyService;
+    private final SpecialtyService service;
 
     @PostMapping
-    public ResponseEntity<Specialty> createSpecialty(@RequestBody Specialty specialty) {
-        return ResponseEntity.ok(specialtyService.createSpecialty(specialty));
+    public ResponseEntity<Specialty> create(@RequestBody Specialty specialty) {
+        return ResponseEntity.ok(service.create(specialty));
     }
 
     @GetMapping
-    public ResponseEntity<List<Specialty>> getAllSpecialties() {
-        return ResponseEntity.ok(specialtyService.getAllSpecialties());
+    public ResponseEntity<List<Specialty>> getAll() {
+        return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Specialty> getSpecialtyById(@PathVariable Long id) {
-        return ResponseEntity.ok(specialtyService.getSpecialtyById(id));
+    public ResponseEntity<Specialty> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Specialty> updateSpecialty(@PathVariable Long id, @RequestBody Specialty specialty) {
-        return ResponseEntity.ok(specialtyService.updateSpecialty(id, specialty));
+    public ResponseEntity<Specialty> update(@PathVariable Long id, @RequestBody Specialty updated) {
+        return ResponseEntity.ok(service.update(id, updated));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSpecialty(@PathVariable Long id) {
-        specialtyService.deleteSpecialty(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
+
+
