@@ -1,0 +1,15 @@
+<FindBugsFilter>
+    <!-- Excluir todos los campos no usados en DTOs -->
+    <Match>
+        <Class name="com.example.myapp.dto.*"/>
+        <Field name=".*"/>
+        <Bug pattern="UUF_UNUSED_FIELD"/>
+    </Match>
+
+    <!-- Excluir anotaciones generadas automáticamente -->
+    <Match>
+        <Class name="com.example.myapp.dto.*"/>
+        <Field name=".*"/>
+        <Bug pattern="URF_UNREAD_FIELD"/>
+    </Match>
+</FindBugsFilter>

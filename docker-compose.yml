@@ -28,7 +28,7 @@ services:
     ports:
       - 8000:8080
     networks:
-      - eam_apps
+      - eam_apps  
     depends_on:
       db:
         condition: service_healthy
