@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.data.domain.Page;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/patients")
@@ -26,7 +25,7 @@ public class PatientController {
     @PostMapping("/register")
     public ResponseEntity<String> registerPatient(@RequestBody Patient patient) {
         String result = patientService.registerNewPatient(patient);
-        if (result.contains("exitosamente")) {
+        if (result.contains("successfully")) {
             return ResponseEntity.ok(result);
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body(result);

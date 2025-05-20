@@ -27,7 +27,7 @@ public class PatientService {
 
     public String registerNewPatient(Patient patient) {
         if (patientRepository.existsByUsername(patient.getUsername())) {
-            return "El nombre de usuario ya está registrado.";
+            return "The username is already registered.";
         }
 
         // Crear historial médico vacío
@@ -46,7 +46,7 @@ public class PatientService {
         // Guardar el paciente junto con su historial médico
         patientRepository.save(patient);
 
-        return "Paciente registrado exitosamente con historial médico.";
+        return "Patient successfully registered with medical history.";
     }
 
      public Page<Patient> getPatients(String filter, int page, int size, String sortBy, String direction) {
@@ -62,7 +62,7 @@ public class PatientService {
     @Transactional
     public Patient updatePatient(String userId, Patient updatedPatient) {
         Patient existingPatient = patientRepository.findById(Integer.parseInt(userId))
-            .orElseThrow(() -> new EntityNotFoundException("Paciente no encontrado con id " + userId));
+            .orElseThrow(() -> new EntityNotFoundException("Patient not found with id " + userId));
 
         // Actualizar campos básicos (ajusta según campos reales)
         existingPatient.setFirstName(updatedPatient.getFirstName());
