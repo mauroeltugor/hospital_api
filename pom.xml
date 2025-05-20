@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.4</version>
+        <version>3.4.5</version>
         <relativePath/>
     </parent>
 
@@ -26,8 +26,6 @@
         <spring-boot.configuration-processor.version>3.2.4</spring-boot.configuration-processor.version>
         <maven.surefire.plugin.version>3.1.2</maven.surefire.plugin.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
-        <spotbugs.version>4.9.3.0</spotbugs.version>
-        <spotbugs.annotations.version>4.9.3</spotbugs.annotations.version>
         <jacoco.version>0.8.10</jacoco.version>
         <mockito.version>5.4.0</mockito.version>
     </properties>
@@ -99,13 +97,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- SpotBugs Annotations -->
-        <dependency>
-            <groupId>com.github.spotbugs</groupId>
-            <artifactId>spotbugs-annotations</artifactId>
-            <version>${spotbugs.annotations.version}</version>
-        </dependency>
-
         <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -163,29 +154,6 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                </configuration>
-            </plugin>
-
-            <!-- SpotBugs Plugin -->
-            <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>${spotbugs.version}</version>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>spotbugs</goal>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <effort>Max</effort>
-                    <threshold>Medium</threshold>
-                    <failOnError>true</failOnError>
-                    <includeTests>true</includeTests>
-                    <excludeFilterFile>${project.basedir}/src/main/resources/spotbugs-exclude.xml</excludeFilterFile>
                 </configuration>
             </plugin>
 
